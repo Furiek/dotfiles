@@ -1,4 +1,12 @@
 # Shared by PowerShell 7 and Windows PowerShell; loaded by profile.ps1.
+# Set session colors in Windows Terminal and compatible graphical terminals.
+if (-not [Console]::IsOutputRedirected -and -not $env:TMUX -and -not $env:STY -and
+    ($env:WT_SESSION -or $env:TERM -match '^(xterm|rxvt|foot|alacritty|wezterm|kitty)')) {
+    $esc = [char]27
+    $bel = [char]7
+    [Console]::Write("${esc}]10;#292524${bel}${esc}]11;#E8DCC5${bel}${esc}]12;#292524${bel}")
+}
+
 if (Get-Module -ListAvailable PSReadLine) {
     Import-Module PSReadLine
     Set-PSReadLineOption -EditMode Windows -HistoryNoDuplicates -MaximumHistoryCount 10000
@@ -58,10 +66,13 @@ function ff {
         Get-ChildItem -File -Recurse | ForEach-Object FullName | fzf @args
     }
 }
-$poshTheme = Join-Path $HOME '.config/oh-my-posh/montys.omp.json'
+# Keep environment names in the theme instead of adding another prompt prefix.
+$env:VIRTUAL_ENV_DISABLE_PROMPT = '1'
+$env:CONDA_CHANGEPS1 = 'false'
+$poshTheme = Join-Path $HOME '.config/oh-my-posh/stelbent-compact.minimal.omp.json'
 if ((Get-Command oh-my-posh -ErrorAction SilentlyContinue) -and (Test-Path $poshTheme)) {
     oh-my-posh init pwsh --config $poshTheme | Invoke-Expression
 }
 Write-Host ''
-Write-Host 'Furiek' -ForegroundColor Magenta
-Write-Host '--------------------------------------' -ForegroundColor Cyan
+Write-Host 'Furiek' -ForegroundColor DarkMagenta
+Write-Host '--------------------------------------' -ForegroundColor DarkCyan

@@ -20,11 +20,4 @@ foreach ($command in $packages.Keys) {
         }
     }
 }
-# Newly installed tools are not on the invoking shell's PATH yet.
-$env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [Environment]::GetEnvironmentVariable('Path', 'User')
-if (-not (Get-Command oh-my-posh -ErrorAction SilentlyContinue)) {
-    throw 'Open a new terminal and run chezmoi apply again to finish font installation.'
-}
-& oh-my-posh font install FiraCode
-if ($LASTEXITCODE -ne 0) { throw 'FiraCode Nerd Font installation failed.' }
-Write-Host 'Select FiraCode Nerd Font in your terminal settings, then open PowerShell 7.'
+Write-Host 'Open a new PowerShell 7 window to use the terminal setup.'

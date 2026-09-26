@@ -10,6 +10,20 @@ case $- in
 esac
 
 
+# Warm paper colors for the whole terminal, not just the prompt.
+# Skip redirected output and terminal multiplexers (configure their outer terminal).
+if [[ -t 1 && -z ${TMUX-} && -z ${STY-} ]]; then
+    case ${TERM-} in
+        linux)
+            # Palette 0 = ink, 7 = paper; make black-on-white the reset default.
+            printf '\033]P0292524\033]P7E8DCC5\033[0;30;47m\033[8]'
+            ;;
+        xterm*|rxvt*|foot*|alacritty*|wezterm*|kitty*)
+            printf '\033]10;#292524\007\033]11;#E8DCC5\007\033]12;#292524\007'
+            ;;
+    esac
+fi
+
 # ------------------------------------------------------------
 # History
 # ------------------------------------------------------------
@@ -113,11 +127,10 @@ fi
 # Oh My Posh
 # ------------------------------------------------------------
 
-# Linux text consoles (including Proxmox's VM console) cannot render Nerd Fonts.
-_posh_theme="$HOME/.config/oh-my-posh/montys.omp.json"
-if [[ ${TERM-} == linux ]]; then
-    _posh_theme="$HOME/.config/oh-my-posh/montys-console.omp.json"
-fi
+# Let Oh My Posh display environment names without a second activation prefix.
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+export CONDA_CHANGEPS1=false
+_posh_theme="$HOME/.config/oh-my-posh/stelbent-compact.minimal.omp.json"
 if command -v oh-my-posh >/dev/null 2>&1 && [[ -f "$_posh_theme" ]]; then
     eval "$(oh-my-posh init bash --config "$_posh_theme")"
 fi
@@ -176,13 +189,13 @@ mkcd() {
 }
 
 # ------------------------------------------------------------
-# Neon startup banner
+# Startup banner
 # ------------------------------------------------------------
 print_furiek_banner() {
     if command -v figlet >/dev/null 2>&1; then
-        printf '\033[1;95m'   # bright magenta
+        printf '\033[35m'   # muted magenta
         figlet -f slant "Furiek"
-        printf '\033[1;96m'
+        printf '\033[36m'
         if [[ ${TERM-} == linux ]]; then
             echo "--------------------------------------"
         else

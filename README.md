@@ -2,7 +2,7 @@
 
 My Bash and PowerShell setup, managed with chezmoi.
 
-Oh My Posh with the Montys theme, FiraCode Nerd Font, fzf, fd, bat, and
+Oh My Posh with a customized stelbent-compact.minimal theme, fzf, fd, bat, and
 Git/Docker shortcuts. Linux gets ble.sh, tmux and figlet. PowerShell uses
 PSReadLine and has an `ff` command for fuzzy file search. Docker isn't installed
 by these scripts.
@@ -58,23 +58,44 @@ line to load it from both PowerShell editions' profiles, using the actual
 Documents folder even if it's in OneDrive. Existing profiles are kept, with a
 `.chezmoi-backup` copy made before editing.
 
-## Font
+## Terminal colors
 
-Select **FiraCode Nerd Font** in your terminal settings after installation.
-In Windows Terminal: Settings → Defaults → Appearance → Font face.
+The shell sets a warm paper background (`#E8DCC5`), dark text (`#292524`) and a
+dark cursor in Windows Terminal and terminals supporting xterm color sequences,
+such as Ubuntu's GNOME Terminal. Bash also sets paper/ink colors on the Linux
+text console (`TERM=linux`), including Proxmox's VM console. Run `clear` once
+there if old screen contents still have the previous background.
 
-For WSL or SSH, the font needs to be installed on the computer running the
-terminal.
+These are session colors, applied when the shell opens; terminal settings files
+aren't replaced. Over SSH they affect the terminal you're connecting from.
+Multiplexers, redirected output and unrecognized terminal types are skipped.
+If your terminal blocks color changes, set those colors in its preferences.
 
-## Proxmox console
+Use any standard monospace font. Nerd Fonts are no longer downloaded or required;
+previously installed fonts are left in place.
 
-With `TERM=linux`, Bash uses `montys-console.omp.json`: the same Montys layout
-and colors, with text labels and straight separators instead of font icons.
-SSH and desktop terminals keep the full theme. Console colors depend on the
-terminal's palette. The startup banner also uses an ASCII separator.
+## Prompt
 
-The console theme is adapted from Montys; its upstream license is in
-`LICENSE.montys`.
+Bash and PowerShell use our version of
+[stelbent-compact.minimal](https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/stelbent-compact.minimal.omp.json).
+It keeps the compact layout and colors, with ASCII labels and separators for
+Proxmox consoles as well as desktop terminals. No Nerd Font is needed for the
+prompt. The shell sets the window colors separately from the prompt.
+
+- Python: shows the active virtual environment name and Python version.
+- Conda: shows the active environment, including `base`. If a virtualenv is
+  activated inside Conda, the inner virtualenv is shown.
+- Docker: shows a non-default context or Docker host when configured. The default
+  local context is hidden. This identifies the selected target, not daemon health
+  or running containers.
+
+Activate environments as usual; this setup doesn't install Python, Conda or
+Docker. Their extra prompt prefixes are disabled so the theme displays the name
+only once. Restart the shell before activating an environment after an update.
+
+Edit `dot_config/oh-my-posh/stelbent-compact.minimal.omp.json` to customize it.
+The theme is stored in this repo, so upstream downloads won't overwrite changes.
+The upstream license is in `LICENSE.oh-my-posh`.
 
 ## Private repo
 
@@ -94,10 +115,6 @@ chezmoi update
 ```
 
 The installers run once per machine. Shell configs update on every apply.
-Both shells use [Montys](https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/montys.omp.json),
-which chezmoi downloads to `~/.config/oh-my-posh/montys.omp.json` and caches for
-seven days.
-
 ## Working on the repo
 
 Edit files in `~/Code/dotfiles`. From that checkout:
