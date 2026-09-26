@@ -2,7 +2,7 @@
 
 My Bash and PowerShell setup, managed with chezmoi.
 
-Oh My Posh with a customized stelbent-compact.minimal theme, fzf, fd, bat, and
+Oh My Posh with Montys, fzf, fd, bat, and
 Git/Docker shortcuts. Linux gets ble.sh, tmux and figlet. PowerShell uses
 PSReadLine and has an `ff` command for fuzzy file search. Docker isn't installed
 by these scripts.
@@ -60,30 +60,36 @@ Documents folder even if it's in OneDrive. Existing profiles are kept, with a
 
 ## Prompt
 
-Both shells use `stelbent-compact.minimal.omp.json`, with ASCII separators and
-terminal-default text colors. Prompt backgrounds are transparent. The shell
-does not change the terminal palette or window background. Nerd Fonts aren't
-required or installed.
+The prompt is Montys, selected at shell startup:
 
-Python/Conda names appear when an environment is active, including Conda `base`.
-A virtualenv inside Conda takes precedence. Docker shows a configured non-default
-context or host, not daemon health or running containers. These tools are not
-installed by the dotfiles. Their extra environment prompt prefixes are disabled
-to avoid showing the environment name twice.
+- Graphical terminals and typical SSH sessions get full Montys with Nerd Font icons.
+- Linux text consoles (`TERM=linux`), including Proxmox's VM console, get Montys
+  with ASCII symbols and standard ANSI colors instead of custom RGB colors.
+- Bash uses a basic prompt for `TERM=dumb` or an unset terminal type.
 
-The customized theme lives in `dot_config/oh-my-posh/`; its upstream license is
-in `LICENSE.oh-my-posh`.
+Neither variant changes the terminal palette or whole-window background. Montys
+colors only its own prompt segments. The environment and Docker indicators remain:
+active Python/Conda environment (including `base`), Python version, and non-default
+Docker context or host. Python, Conda and Docker themselves are not installed.
 
-If an earlier setup changed your Proxmox Linux console colors, reset them once
-in that console after updating:
+FiraCode Nerd Font is installed by the setup scripts. Select it in your graphical
+terminal's preferences. With SSH the font is needed on the computer running the
+terminal, not just the remote VM. Existing setups missing the font can run
+`oh-my-posh font install FiraCode` on that computer.
+
+Terminal type cannot tell us whether a font is installed. To use the console
+variant in a graphical terminal or SSH session without Nerd Fonts:
 
 ```bash
-printf '\033]R\033[0;37;40m\033[8]\033[2J\033[H'
+export DOTFILES_PROMPT_STYLE=console
 exec bash
 ```
 
-This recovery command is for the Linux text console (`TERM=linux`), not an SSH
-terminal window.
+In PowerShell, set `$env:DOTFILES_PROMPT_STYLE = 'console'` and reload the profile.
+Unset the variable to return to automatic selection.
+
+Both themes are stored in `dot_config/oh-my-posh/`. The upstream license is in
+`LICENSE.oh-my-posh`.
 
 ## Private repo
 

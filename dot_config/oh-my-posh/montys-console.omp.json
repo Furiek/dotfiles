@@ -1,0 +1,138 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "background": "blue",
+          "foreground": "white",
+          "leading_diamond": "|",
+          "style": "diamond",
+          "template": "Linux {{ .HostName }} ",
+          "type": "os"
+        },
+        {
+          "background": "cyan",
+          "foreground": "black",
+          "powerline_symbol": "|",
+          "options": {
+            "folder_icon": "dir",
+            "folder_separator_icon": "/",
+            "home_icon": "~",
+            "style": "full"
+          },
+          "style": "powerline",
+          "template": " dir {{ .Path }} ",
+          "type": "path"
+        },
+        {
+          "background": "green",
+          "foreground": "black",
+          "powerline_symbol": "|",
+          "options": {
+            "branch_icon": "branch:"
+          },
+          "style": "powerline",
+          "template": " git ({{ .HEAD }}{{ if gt .StashCount 0 }} stash:{{ .StashCount }}{{ end }}) ",
+          "type": "git"
+        },
+        {
+          "background": "yellow",
+          "foreground": "black",
+          "powerline_symbol": "|",
+          "style": "powerline",
+          "template": " node {{ .Full }} ",
+          "type": "node"
+        },
+        {
+          "type": "python",
+          "style": "powerline",
+          "template": " {{ if and .Env.CONDA_DEFAULT_ENV (not .Env.VIRTUAL_ENV) }}conda{{ else }}venv{{ end }}:{{ .Venv }}{{ if .Full }} py:{{ .Full }}{{ end }} ",
+          "options": {
+            "display_mode": "environment",
+            "fetch_virtual_env": true,
+            "display_default": true,
+            "home_enabled": true,
+            "folder_name_fallback": false
+          },
+          "foreground": "white",
+          "background": "magenta",
+          "powerline_symbol": "|"
+        },
+        {
+          "type": "docker",
+          "style": "powerline",
+          "template": " docker:{{ .Context }} ",
+          "options": {
+            "display_mode": "context"
+          },
+          "foreground": "black",
+          "background": "cyan",
+          "powerline_symbol": "|"
+        },
+        {
+          "background": "magenta",
+          "foreground": "white",
+          "powerline_symbol": "|",
+          "options": {
+            "always_enabled": true
+          },
+          "style": "powerline",
+          "template": " took {{ .FormattedMs }} ",
+          "type": "executiontime"
+        },
+        {
+          "background": "blue",
+          "foreground": "white",
+          "powerline_symbol": "|",
+          "options": {
+            "time_format": "3:04 PM"
+          },
+          "style": "powerline",
+          "template": " {{ .CurrentDate | date .Format }} ",
+          "type": "time"
+        },
+        {
+          "background": "blue",
+          "background_templates": [
+            "{{ if gt .Code 0 }}red{{ end }}"
+          ],
+          "foreground": "white",
+          "powerline_symbol": "|",
+          "options": {
+            "always_enabled": true
+          },
+          "style": "diamond",
+          "template": " {{ if gt .Code 0 }}exit:{{ .Code }}{{ else }}ok{{ end }} ",
+          "trailing_diamond": "|",
+          "type": "status"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "foreground": "default",
+          "style": "plain",
+          "template": "root ",
+          "type": "root",
+          "background": "transparent"
+        },
+        {
+          "foreground": "default",
+          "style": "plain",
+          "template": " <b>{{ .UserName }}</b> >>",
+          "type": "text",
+          "background": "transparent"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "final_space": true,
+  "version": 4
+}
