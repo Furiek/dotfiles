@@ -60,16 +60,13 @@ Documents folder even if it's in OneDrive. Existing profiles are kept, with a
 
 ## Terminal colors
 
-The shell sets a warm paper background (`#E8DCC5`), dark text (`#292524`) and a
-dark cursor in Windows Terminal and terminals supporting xterm color sequences,
-such as Ubuntu's GNOME Terminal. Bash also sets paper/ink colors on the Linux
-text console (`TERM=linux`), including Proxmox's VM console. Run `clear` once
-there if old screen contents still have the previous background.
+The shell leaves the terminal's palette and window background alone. Prompt
+text outside the colored segments inherits the terminal's default foreground.
 
-These are session colors, applied when the shell opens; terminal settings files
-aren't replaced. Over SSH they affect the terminal you're connecting from.
-Multiplexers, redirected output and unrecognized terminal types are skipped.
-If your terminal blocks color changes, set those colors in its preferences.
+To change the whole window, use the terminal application's appearance settings.
+A lighter dark background such as `#303030` with light text (`#E6E6E6`) keeps
+the prompt readable. Proxmox's Linux text console has different color controls;
+we don't override its palette from the shell profile.
 
 Use any standard monospace font. Nerd Fonts are no longer downloaded or required;
 previously installed fonts are left in place.
@@ -80,7 +77,7 @@ Bash and PowerShell use our version of
 [stelbent-compact.minimal](https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/stelbent-compact.minimal.omp.json).
 It keeps the compact layout and colors, with ASCII labels and separators for
 Proxmox consoles as well as desktop terminals. No Nerd Font is needed for the
-prompt. The shell sets the window colors separately from the prompt.
+prompt. The terminal application controls the window background.
 
 - Python: shows the active virtual environment name and Python version.
 - Conda: shows the active environment, including `base`. If a virtualenv is

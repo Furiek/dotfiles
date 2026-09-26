@@ -9,7 +9,6 @@
       "segments": [
         {
           "type": "session",
-          "foreground": "#57534E",
           "style": "plain",
           "template": "+ {{ if .SSHSession }}ssh {{ end }}{{ .UserName }}@{{ .HostName }} "
         },
@@ -99,12 +98,11 @@
         },
         {
           "type": "time",
-          "foreground": "#46612E",
           "options": {
             "time_format": "15:04:05"
           },
           "style": "plain",
-          "template": " <#57534E,>|</> {{ .CurrentDate | date .Format }}"
+          "template": " | {{ .CurrentDate | date .Format }}"
         }
       ]
     },
@@ -115,13 +113,11 @@
       "segments": [
         {
           "type": "text",
-          "foreground": "#57534E",
           "style": "plain",
           "template": "+"
         },
         {
           "type": "text",
-          "foreground": "#292524",
           "style": "plain",
           "template": "$"
         }
