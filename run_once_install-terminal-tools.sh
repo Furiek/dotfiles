@@ -13,11 +13,11 @@ else
 fi
 if command -v apt-get >/dev/null 2>&1; then
     "${elevate[@]}" apt-get update
-    "${elevate[@]}" apt-get install -y git curl wget unzip make gawk fzf fd-find bat tmux figlet
+    "${elevate[@]}" apt-get install -y git curl wget unzip make gawk fzf fd-find bat tmux fontconfig figlet
 elif command -v dnf >/dev/null 2>&1; then
-    "${elevate[@]}" dnf install -y git curl wget unzip make gawk fzf fd-find bat tmux figlet
+    "${elevate[@]}" dnf install -y git curl wget unzip make gawk fzf fd-find bat tmux fontconfig figlet
 elif command -v pacman >/dev/null 2>&1; then
-    "${elevate[@]}" pacman -Syu --needed --noconfirm git curl wget unzip make gawk fzf fd bat tmux figlet
+    "${elevate[@]}" pacman -Syu --needed --noconfirm git curl wget unzip make gawk fzf fd bat tmux fontconfig figlet
 else
     echo "Unsupported Linux package manager; install the tools manually (see README)." >&2
     exit 1
@@ -77,6 +77,30 @@ else
 fi
 
 # ------------------------------------------------------------
+# FiraCode Nerd Font
+# ------------------------------------------------------------
+
+echo "==> Installing FiraCode Nerd Font"
+
+FONT_DIR="$HOME/.local/share/fonts/FiraCodeNerdFont"
+mkdir -p "$FONT_DIR"
+
+TMP_FONT_DIR="$work_dir/fonts"
+mkdir -p "$TMP_FONT_DIR"
+
+curl -fsSL \
+    https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip \
+    -o "$TMP_FONT_DIR/FiraCode.zip"
+
+unzip -qo "$TMP_FONT_DIR/FiraCode.zip" -d "$FONT_DIR"
+
+rm -rf "$TMP_FONT_DIR"
+
+if command -v fc-cache >/dev/null 2>&1; then
+    fc-cache -f "$FONT_DIR"
+fi
+
+# ------------------------------------------------------------
 # Finish
 # ------------------------------------------------------------
 
@@ -92,10 +116,11 @@ echo "  - bat"
 echo "  - tmux"
 echo "  - ble.sh"
 echo "  - Oh My Posh"
-echo "  - stelbent-compact.minimal theme"
+echo "  - Montys theme"
+echo "  - FiraCode Nerd Font"
 echo
 echo "Theme:"
-echo "  ~/.config/oh-my-posh/stelbent-compact.minimal.omp.json"
+echo "  ~/.config/oh-my-posh/montys.omp.json"
 echo
 echo "Restart Bash or run:"
 echo

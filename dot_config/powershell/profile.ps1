@@ -61,7 +61,7 @@ function ff {
 # Keep environment names in the theme instead of adding another prompt prefix.
 $env:VIRTUAL_ENV_DISABLE_PROMPT = '1'
 $env:CONDA_CHANGEPS1 = 'false'
-$poshTheme = Join-Path $HOME '.config/oh-my-posh/stelbent-compact.minimal.omp.json'
+$poshTheme = Join-Path $HOME '.config/oh-my-posh/montys.omp.json'
 if ((Get-Command oh-my-posh -ErrorAction SilentlyContinue) -and (Test-Path $poshTheme)) {
     oh-my-posh init pwsh --config $poshTheme | Invoke-Expression
 }

@@ -2,7 +2,7 @@
 
 My Bash and PowerShell setup, managed with chezmoi.
 
-Oh My Posh with a customized stelbent-compact.minimal theme, fzf, fd, bat, and
+Oh My Posh with the Montys theme, fzf, fd, bat, and
 Git/Docker shortcuts. Linux gets ble.sh, tmux and figlet. PowerShell uses
 PSReadLine and has an `ff` command for fuzzy file search. Docker isn't installed
 by these scripts.
@@ -58,42 +58,34 @@ line to load it from both PowerShell editions' profiles, using the actual
 Documents folder even if it's in OneDrive. Existing profiles are kept, with a
 `.chezmoi-backup` copy made before editing.
 
-## Terminal colors
+## Prompt and fonts
 
-The shell leaves the terminal's palette and window background alone. The whole
-prompt and startup banner use the terminal's default text and background colors.
-There are no colored prompt blocks.
+Bash and PowerShell use Montys, with the active Python/Conda environment and
+non-default Docker context added. The theme files live in
+`dot_config/oh-my-posh/`; they are stored in this repo so upstream updates won't
+overwrite the custom segments. The upstream license is in `LICENSE.oh-my-posh`.
 
-To change the whole window, use the terminal application's appearance settings.
-A lighter dark background such as `#303030` with light text (`#E6E6E6`) keeps
-the prompt readable. Proxmox's Linux text console has different color controls;
-we don't override its palette from the shell profile.
+The installers include FiraCode Nerd Font. Select it in your terminal's font
+settings. For SSH, the font must be installed on the computer running the
+terminal. If you already ran the setup without fonts, install it there with:
 
-Use any standard monospace font. Nerd Fonts are no longer downloaded or required;
-previously installed fonts are left in place.
+```bash
+oh-my-posh font install FiraCode
+```
 
-## Prompt
+Bash uses `montys-console.omp.json` when `TERM=linux`, including Proxmox's text
+console. It keeps Montys's layout and colors with ASCII labels and separators.
+SSH and graphical terminals use the full theme.
 
-Bash and PowerShell use our version of
-[stelbent-compact.minimal](https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/stelbent-compact.minimal.omp.json).
-It keeps the compact layout, with ASCII labels and separators for
-Proxmox consoles as well as desktop terminals. No Nerd Font is needed for the
-prompt. The terminal application controls the window background.
+The shell does not change the terminal palette or whole-window background.
+Montys does color its own prompt segments. If a previous setup left your console
+colors changed, reset the terminal before reloading the shell.
 
-- Python: shows the active virtual environment name and Python version.
-- Conda: shows the active environment, including `base`. If a virtualenv is
-  activated inside Conda, the inner virtualenv is shown.
-- Docker: shows a non-default context or Docker host when configured. The default
-  local context is hidden. This identifies the selected target, not daemon health
-  or running containers.
-
-Activate environments as usual; this setup doesn't install Python, Conda or
-Docker. Their extra prompt prefixes are disabled so the theme displays the name
-only once. Restart the shell before activating an environment after an update.
-
-Edit `dot_config/oh-my-posh/stelbent-compact.minimal.omp.json` to customize it.
-The theme is stored in this repo, so upstream downloads won't overwrite changes.
-The upstream license is in `LICENSE.oh-my-posh`.
+Python/Conda names appear when an environment is active, including Conda `base`.
+A virtualenv inside Conda takes precedence. Docker shows a configured non-default
+context or host, not daemon health or running containers. These tools are not
+installed by the dotfiles. Their extra environment prompt prefixes are disabled
+to avoid showing the environment name twice.
 
 ## Private repo
 
@@ -113,6 +105,7 @@ chezmoi update
 ```
 
 The installers run once per machine. Shell configs update on every apply.
+
 ## Working on the repo
 
 Edit files in `~/Code/dotfiles`. From that checkout:
