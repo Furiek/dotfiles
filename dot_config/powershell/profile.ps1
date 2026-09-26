@@ -69,5 +69,5 @@ if ((Get-Command oh-my-posh -ErrorAction SilentlyContinue) -and (Test-Path $posh
     oh-my-posh init pwsh --config $poshTheme | Invoke-Expression
 }
 Write-Host ''
-Write-Host 'Furiek'
+Write-Host 'Furiek' -ForegroundColor Magenta
 Write-Host '--------------------------------------'

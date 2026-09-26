@@ -188,7 +188,9 @@ mkcd() {
 # ------------------------------------------------------------
 print_furiek_banner() {
     if command -v figlet >/dev/null 2>&1; then
+        printf '\033[1;95m'
         figlet -f slant "Furiek"
+        printf '\033[0m'
         if [[ ${TERM-} == linux ]]; then
             echo "--------------------------------------"
         else

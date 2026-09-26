@@ -123,7 +123,7 @@
           "background": "transparent"
         },
         {
-          "foreground": "default",
+          "foreground": "lightMagenta",
           "style": "plain",
           "template": " <b>{{ .UserName }}</b> >>",
           "type": "text",
