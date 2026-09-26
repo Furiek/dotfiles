@@ -58,6 +58,30 @@ line to load it from both PowerShell editions' profiles, using the actual
 Documents folder even if it's in OneDrive. Existing profiles are kept, with a
 `.chezmoi-backup` copy made before editing.
 
+## Git Bash on Windows
+
+Use the Windows `chezmoi.exe` installed above, not the Linux executable in WSL.
+The Windows installer supplies Git, Oh My Posh, fzf, fd and bat for both shells.
+From Git Bash, after pushing these changes:
+
+```bash
+chezmoi update
+exec bash --login
+```
+
+On a fresh machine, use the same `chezmoi init --apply` command as PowerShell.
+Chezmoi now deploys `.bashrc` on Windows too. A setup script adds a guarded loader
+to the first existing `.bash_profile`, `.bash_login`, or `.profile`, backing it up
+before editing. If none exists, it creates `.bash_profile`. Run a full apply;
+`--exclude scripts` skips this login setup.
+
+Git Bash's `$HOME` must point to the same Windows user directory chezmoi manages
+(normally `/c/Users/YourName`). WSL has a separate Linux home and setup. Compare
+`echo "$HOME"` and `chezmoi execute-template '{{ .chezmoi.homeDir }}'` if files
+seem to land in the wrong place. Reopen Git Bash after installing tools so it
+picks up the Windows PATH. Linux-only tools (ble.sh, tmux and figlet) aren't
+installed on Windows; the banner falls back to colored text.
+
 ## Prompt
 
 The prompt is Montys, selected at shell startup:

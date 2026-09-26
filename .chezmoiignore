@@ -3,12 +3,15 @@ LICENSE
 LICENSE.oh-my-posh
 .gitattributes
 .github
-{{ if ne .chezmoi.os "linux" }}
+{{ if and (ne .chezmoi.os "linux") (ne .chezmoi.os "windows") }}
 .bashrc
+{{ end }}
+{{ if ne .chezmoi.os "linux" }}
 install-terminal-tools.sh
 {{ end }}
 {{ if ne .chezmoi.os "windows" }}
 .config/powershell
 install-terminal-tools.ps1
 link-powershell-profile.ps1
+link-git-bash-profile.ps1
 {{ end }}

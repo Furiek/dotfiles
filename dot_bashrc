@@ -8,6 +8,7 @@ case $- in
     *i*) ;;
       *) return ;;
 esac
+_DOTFILES_BASHRC_LOADED=1
 
 
 # ------------------------------------------------------------
@@ -127,6 +128,9 @@ if [[ ${DOTFILES_PROMPT_STYLE-} == console && ${TERM-} != dumb && -n ${TERM-} ]]
     _posh_theme="$HOME/.config/oh-my-posh/montys-console.omp.json"
 fi
 if command -v oh-my-posh >/dev/null 2>&1 && [[ -f "$_posh_theme" ]]; then
+    case ${OSTYPE-} in
+        msys*|cygwin*) _posh_theme="$(cygpath -w "$_posh_theme")" ;;
+    esac
     eval "$(oh-my-posh init bash --config "$_posh_theme")"
 fi
 unset _posh_theme
@@ -172,7 +176,11 @@ elif command -v dnf >/dev/null 2>&1; then
 elif command -v pacman >/dev/null 2>&1; then
     alias update='sudo pacman -Syu'
 fi
-alias ports='ss -tulpn'
+if command -v ss >/dev/null 2>&1; then
+    alias ports='ss -tulpn'
+elif [[ ${OSTYPE-} == msys* ]]; then
+    alias ports='netstat.exe -ano'
+fi
 
 
 # ------------------------------------------------------------
@@ -196,6 +204,8 @@ print_furiek_banner() {
         else
             echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
         fi
+    else
+        printf '\033[1;95mFuriek\033[0m\n'
     fi
 }
 
