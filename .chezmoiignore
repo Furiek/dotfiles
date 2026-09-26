@@ -10,6 +10,8 @@ LICENSE.oh-my-posh
 install-terminal-tools.sh
 {{ end }}
 {{ if ne .chezmoi.os "windows" }}
+background_images
+configure-terminal-background.ps1
 .config/powershell
 install-terminal-tools.ps1
 link-powershell-profile.ps1
