@@ -1,0 +1,13 @@
+README.md
+LICENSE
+.gitattributes
+.github
+{{ if ne .chezmoi.os "linux" }}
+.bashrc
+install-terminal-tools.sh
+{{ end }}
+{{ if ne .chezmoi.os "windows" }}
+.config/powershell
+install-terminal-tools.ps1
+link-powershell-profile.ps1
+{{ end }}

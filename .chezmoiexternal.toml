@@ -1,0 +1,4 @@
+[".config/oh-my-posh/montys.omp.json"]
+type = "file"
+url = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/montys.omp.json"
+refreshPeriod = "168h"

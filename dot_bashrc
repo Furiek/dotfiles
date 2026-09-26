@@ -1,0 +1,205 @@
+# ~/.bashrc
+# Managed by chezmoi
+
+# ------------------------------------------------------------
+# Interactive shell only
+# ------------------------------------------------------------
+case $- in
+    *i*) ;;
+      *) return ;;
+esac
+
+
+# ------------------------------------------------------------
+# History
+# ------------------------------------------------------------
+HISTCONTROL=ignoreboth
+HISTSIZE=10000
+HISTFILESIZE=20000
+
+shopt -s histappend
+shopt -s checkwinsize
+
+
+# ------------------------------------------------------------
+# PATH
+# ------------------------------------------------------------
+if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
+
+if [[ -d "$HOME/bin" ]] && [[ ":$PATH:" != *":$HOME/bin:"* ]]; then
+    export PATH="$HOME/bin:$PATH"
+fi
+
+
+# ------------------------------------------------------------
+# Aliases
+# ------------------------------------------------------------
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+alias cls='clear'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+alias grep='grep --color=auto'
+
+
+# ------------------------------------------------------------
+# bat
+# ------------------------------------------------------------
+# Debian/Ubuntu package is commonly called batcat
+if command -v batcat >/dev/null 2>&1; then
+    alias bat='batcat'
+fi
+
+
+# ------------------------------------------------------------
+# fd
+# ------------------------------------------------------------
+# Debian/Ubuntu package is commonly called fdfind
+if command -v fdfind >/dev/null 2>&1; then
+    alias fd='fdfind'
+fi
+
+
+# ------------------------------------------------------------
+# fzf
+# ------------------------------------------------------------
+
+# Debian / Ubuntu package locations
+if [[ -f /usr/share/doc/fzf/examples/key-bindings.bash ]]; then
+    source /usr/share/doc/fzf/examples/key-bindings.bash
+fi
+
+if [[ -f /usr/share/doc/fzf/examples/completion.bash ]]; then
+    source /usr/share/doc/fzf/examples/completion.bash
+fi
+
+# Alternative/manual fzf installation
+if [[ -f "$HOME/.fzf.bash" ]]; then
+    source "$HOME/.fzf.bash"
+fi
+
+
+# ------------------------------------------------------------
+# fzf commands
+# ------------------------------------------------------------
+
+# Ctrl+T -> fuzzy file search
+if command -v fd >/dev/null 2>&1; then
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+elif command -v fdfind >/dev/null 2>&1; then
+    export FZF_DEFAULT_COMMAND='fdfind --type f --hidden --follow --exclude .git'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+fi
+
+# Alt+C -> fuzzy directory search
+if command -v fd >/dev/null 2>&1; then
+    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+
+elif command -v fdfind >/dev/null 2>&1; then
+    export FZF_ALT_C_COMMAND='fdfind --type d --hidden --follow --exclude .git'
+fi
+
+
+# ------------------------------------------------------------
+# Oh My Posh
+# ------------------------------------------------------------
+
+if command -v oh-my-posh >/dev/null 2>&1 && [[ -f "$HOME/.config/oh-my-posh/montys.omp.json" ]]; then
+    eval "$(oh-my-posh init bash --config "$HOME/.config/oh-my-posh/montys.omp.json")"
+fi
+
+
+# ------------------------------------------------------------
+# Git aliases
+# ------------------------------------------------------------
+
+alias gs='git status'
+alias ga='git add'
+alias gaa='git add --all'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git pull'
+alias gb='git branch'
+alias gco='git checkout'
+alias gsw='git switch'
+alias gd='git diff'
+
+
+# ------------------------------------------------------------
+# Docker aliases
+# ------------------------------------------------------------
+
+alias dps='docker ps'
+alias dpa='docker ps -a'
+
+alias dc='docker compose'
+alias dcu='docker compose up -d'
+alias dcd='docker compose down'
+alias dcl='docker compose logs -f'
+
+
+# ------------------------------------------------------------
+# System aliases
+# ------------------------------------------------------------
+
+if command -v apt >/dev/null 2>&1; then
+    alias update='sudo apt update && sudo apt upgrade'
+elif command -v dnf >/dev/null 2>&1; then
+    alias update='sudo dnf upgrade'
+elif command -v pacman >/dev/null 2>&1; then
+    alias update='sudo pacman -Syu'
+fi
+alias ports='ss -tulpn'
+
+
+# ------------------------------------------------------------
+# Helpers
+# ------------------------------------------------------------
+
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+# ------------------------------------------------------------
+# Neon startup banner
+# ------------------------------------------------------------
+print_furiek_banner() {
+    if command -v figlet >/dev/null 2>&1; then
+        printf '\033[1;95m'   # bright magenta
+        figlet -f slant "Furiek"
+        printf '\033[1;96m'
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        printf '\033[0m'
+    fi
+}
+
+print_furiek_banner
+
+# ------------------------------------------------------------
+# ble.sh
+# ------------------------------------------------------------
+
+if [[ -f "$HOME/.local/share/blesh/ble.sh" ]]; then
+    source "$HOME/.local/share/blesh/ble.sh" --attach=none
+
+    # Slow down autosuggestions
+    bleopt complete_auto_delay=500
+    bleopt complete_limit_auto=100
+fi
+
+# ------------------------------------------------------------
+# ble.sh finalization
+# ------------------------------------------------------------
+
+if [[ ${BLE_VERSION-} ]]; then
+    ble-attach
+fi
