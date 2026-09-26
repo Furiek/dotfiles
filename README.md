@@ -66,6 +66,16 @@ In Windows Terminal: Settings → Defaults → Appearance → Font face.
 For WSL or SSH, the font needs to be installed on the computer running the
 terminal.
 
+## Proxmox console
+
+With `TERM=linux`, Bash uses `montys-console.omp.json`: the same Montys layout
+and colors, with text labels and straight separators instead of font icons.
+SSH and desktop terminals keep the full theme. Console colors depend on the
+terminal's palette. The startup banner also uses an ASCII separator.
+
+The console theme is adapted from Montys; its upstream license is in
+`LICENSE.montys`.
+
 ## Private repo
 
 Authenticate with GitHub before running `chezmoi init`. With an SSH key set up,
