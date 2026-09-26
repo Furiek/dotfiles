@@ -131,6 +131,8 @@ if command -v oh-my-posh >/dev/null 2>&1 && [[ -f "$_posh_theme" ]]; then
     case ${OSTYPE-} in
         msys*|cygwin*) _posh_theme="$(cygpath -w "$_posh_theme")" ;;
     esac
+    # A parent PowerShell session may have exported its own shell identity.
+    export POSH_SHELL=bash
     eval "$(oh-my-posh init bash --config "$_posh_theme")"
 fi
 unset _posh_theme

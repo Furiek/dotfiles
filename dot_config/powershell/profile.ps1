@@ -66,6 +66,8 @@ if ($env:TERM -eq 'linux' -or $env:DOTFILES_PROMPT_STYLE -eq 'console') {
     $poshTheme = Join-Path $HOME '.config/oh-my-posh/montys-console.omp.json'
 }
 if ((Get-Command oh-my-posh -ErrorAction SilentlyContinue) -and (Test-Path $poshTheme)) {
+    # Git Bash exports POSH_SHELL=bash; don't let that select MSYS paths here.
+    $env:POSH_SHELL = 'pwsh'
     oh-my-posh init pwsh --config $poshTheme | Invoke-Expression
 }
 Write-Host ''
