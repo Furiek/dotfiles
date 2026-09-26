@@ -60,8 +60,9 @@ Documents folder even if it's in OneDrive. Existing profiles are kept, with a
 
 ## Terminal colors
 
-The shell leaves the terminal's palette and window background alone. Prompt
-text outside the colored segments inherits the terminal's default foreground.
+The shell leaves the terminal's palette and window background alone. The whole
+prompt and startup banner use the terminal's default text and background colors.
+There are no colored prompt blocks.
 
 To change the whole window, use the terminal application's appearance settings.
 A lighter dark background such as `#303030` with light text (`#E6E6E6`) keeps
@@ -75,7 +76,7 @@ previously installed fonts are left in place.
 
 Bash and PowerShell use our version of
 [stelbent-compact.minimal](https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/stelbent-compact.minimal.omp.json).
-It keeps the compact layout and colors, with ASCII labels and separators for
+It keeps the compact layout, with ASCII labels and separators for
 Proxmox consoles as well as desktop terminals. No Nerd Font is needed for the
 prompt. The terminal application controls the window background.
 
