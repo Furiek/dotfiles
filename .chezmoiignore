@@ -5,7 +5,6 @@ LICENSE.oh-my-posh
 .github
 {{ if ne .chezmoi.os "linux" }}
 .bashrc
-.config/oh-my-posh/montys-console.omp.json
 install-terminal-tools.sh
 {{ end }}
 {{ if ne .chezmoi.os "windows" }}

@@ -2,7 +2,7 @@
 
 My Bash and PowerShell setup, managed with chezmoi.
 
-Oh My Posh with the Montys theme, fzf, fd, bat, and
+Oh My Posh with a customized stelbent-compact.minimal theme, fzf, fd, bat, and
 Git/Docker shortcuts. Linux gets ble.sh, tmux and figlet. PowerShell uses
 PSReadLine and has an `ff` command for fuzzy file search. Docker isn't installed
 by these scripts.
@@ -58,34 +58,32 @@ line to load it from both PowerShell editions' profiles, using the actual
 Documents folder even if it's in OneDrive. Existing profiles are kept, with a
 `.chezmoi-backup` copy made before editing.
 
-## Prompt and fonts
+## Prompt
 
-Bash and PowerShell use Montys, with the active Python/Conda environment and
-non-default Docker context added. The theme files live in
-`dot_config/oh-my-posh/`; they are stored in this repo so upstream updates won't
-overwrite the custom segments. The upstream license is in `LICENSE.oh-my-posh`.
-
-The installers include FiraCode Nerd Font. Select it in your terminal's font
-settings. For SSH, the font must be installed on the computer running the
-terminal. If you already ran the setup without fonts, install it there with:
-
-```bash
-oh-my-posh font install FiraCode
-```
-
-Bash uses `montys-console.omp.json` when `TERM=linux`, including Proxmox's text
-console. It keeps Montys's layout and colors with ASCII labels and separators.
-SSH and graphical terminals use the full theme.
-
-The shell does not change the terminal palette or whole-window background.
-Montys does color its own prompt segments. If a previous setup left your console
-colors changed, reset the terminal before reloading the shell.
+Both shells use `stelbent-compact.minimal.omp.json`, with ASCII separators and
+terminal-default text colors. Prompt backgrounds are transparent. The shell
+does not change the terminal palette or window background. Nerd Fonts aren't
+required or installed.
 
 Python/Conda names appear when an environment is active, including Conda `base`.
 A virtualenv inside Conda takes precedence. Docker shows a configured non-default
 context or host, not daemon health or running containers. These tools are not
 installed by the dotfiles. Their extra environment prompt prefixes are disabled
 to avoid showing the environment name twice.
+
+The customized theme lives in `dot_config/oh-my-posh/`; its upstream license is
+in `LICENSE.oh-my-posh`.
+
+If an earlier setup changed your Proxmox Linux console colors, reset them once
+in that console after updating:
+
+```bash
+printf '\033]R\033[0;37;40m\033[8]\033[2J\033[H'
+exec bash
+```
+
+This recovery command is for the Linux text console (`TERM=linux`), not an SSH
+terminal window.
 
 ## Private repo
 

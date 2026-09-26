@@ -1,0 +1,125 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "console_title_template": "{{if .Segments.Git.RepoName}} {{.Segments.Git.RepoName}} {{else}} {{.Folder}} {{end}}",
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "session",
+          "style": "plain",
+          "template": "+ {{ if .SSHSession }}ssh {{ end }}{{ .UserName }}@{{ .HostName }} ",
+          "foreground": "default",
+          "background": "transparent"
+        },
+        {
+          "type": "path",
+          "options": {
+            "style": "agnoster_full",
+            "home_icon": "~",
+            "folder_icon": "dir",
+            "folder_separator_icon": "/"
+          },
+          "style": "plain",
+          "template": " | {{ .Path }} ",
+          "foreground": "default",
+          "background": "transparent"
+        },
+        {
+          "type": "git",
+          "style": "plain",
+          "template": " | {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} {{ .StashCount }}{{ end }} ",
+          "options": {
+            "branch_ahead_icon": "ahead:",
+            "branch_behind_icon": "behind:",
+            "branch_gone_icon": "gone",
+            "branch_icon": "git:",
+            "branch_identical_icon": "=",
+            "cherry_pick_icon": "pick:",
+            "commit_icon": "commit:",
+            "merge_icon": "merge:",
+            "no_commits_icon": "[no commits]",
+            "rebase_icon": "rebase:",
+            "tag_icon": "tag:",
+            "fetch_status": true
+          },
+          "foreground": "default",
+          "background": "transparent"
+        },
+        {
+          "type": "python",
+          "style": "plain",
+          "template": " | {{ if and .Env.CONDA_DEFAULT_ENV (not .Env.VIRTUAL_ENV) }}conda{{ else }}venv{{ end }}:{{ .Venv }}{{ if .Full }} py:{{ .Full }}{{ end }} ",
+          "options": {
+            "display_mode": "environment",
+            "fetch_virtual_env": true,
+            "display_default": true,
+            "home_enabled": true,
+            "folder_name_fallback": false
+          },
+          "foreground": "default",
+          "background": "transparent"
+        },
+        {
+          "type": "docker",
+          "style": "plain",
+          "template": " | docker:{{ .Context }} ",
+          "options": {
+            "display_mode": "context"
+          },
+          "foreground": "default",
+          "background": "transparent"
+        },
+        {
+          "type": "terraform",
+          "style": "plain",
+          "template": " | {{ .WorkspaceName }}{{ if .Version }} {{ .Version }}{{ end }} ",
+          "foreground": "default",
+          "background": "transparent"
+        },
+        {
+          "type": "status",
+          "style": "plain",
+          "template": " | exit:{{ .Code }} ",
+          "foreground": "default",
+          "background": "transparent"
+        },
+        {
+          "type": "time",
+          "options": {
+            "time_format": "15:04:05"
+          },
+          "style": "plain",
+          "template": " | {{ .CurrentDate | date .Format }}",
+          "foreground": "default",
+          "background": "transparent"
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "template": "+",
+          "foreground": "default",
+          "background": "transparent"
+        },
+        {
+          "type": "text",
+          "style": "plain",
+          "template": "$",
+          "foreground": "default",
+          "background": "transparent"
+        }
+      ]
+    }
+  ],
+  "final_space": true,
+  "version": 4
+}

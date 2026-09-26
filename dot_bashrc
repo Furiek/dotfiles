@@ -116,11 +116,7 @@ fi
 # Let Oh My Posh display environment names without a second activation prefix.
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export CONDA_CHANGEPS1=false
-_posh_theme="$HOME/.config/oh-my-posh/montys.omp.json"
-# Text consoles cannot display Nerd Font icons; keep Montys with text symbols.
-if [[ ${TERM-} == linux ]]; then
-    _posh_theme="$HOME/.config/oh-my-posh/montys-console.omp.json"
-fi
+_posh_theme="$HOME/.config/oh-my-posh/stelbent-compact.minimal.omp.json"
 if command -v oh-my-posh >/dev/null 2>&1 && [[ -f "$_posh_theme" ]]; then
     eval "$(oh-my-posh init bash --config "$_posh_theme")"
 fi
